@@ -12,5 +12,8 @@ new Vue({
   router,
   store,
   vuetify,
+  async beforeCreate() {
+    this.$store.dispatch('getNewsFeed');
+  },
   render: (h) => h(App),
 }).$mount('#app');

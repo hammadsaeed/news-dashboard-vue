@@ -1,15 +1,15 @@
 <template>
-  <hello-world />
+  <ListView />
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld';
+import ListView from '../components/Listview';
 
 export default {
   name: 'Home',
 
   components: {
-    HelloWorld,
+    ListView,
   },
 };
 </script>
