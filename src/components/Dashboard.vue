@@ -4,6 +4,7 @@
       <Loading />
     </div>
     <v-row class="text-center d-flex flex-column" v-else>
+      <SourceFilter :selectedSource="selectedSource" v-on:selectionChange="updateSource"/>
       <v-col class="grid-column">
         <NewsTile
           v-for='article in articles' :key="article.publishedAt" :article='article' type='article'
@@ -16,20 +17,27 @@
 <script>
 import NewsTile from './NewsTile';
 import Loading from './Loading';
+import SourceFilter from './Filter';
 
 export default {
   name: 'Dashboard',
   components: {
+    SourceFilter,
     NewsTile,
     Loading,
   },
   data() {
     return {
+      selectedSource: {},
       data: {},
     };
   },
   computed: {
     articles() {
+      if (this.selectedSource.name) {
+        const { articles } = this.$store.state;
+        return articles.filter((article) => this.selectedSource.name === article.source.name);
+      }
       return this.$store.state.articles;
     },
     loading() {
@@ -40,6 +48,11 @@ export default {
     loading(updatedState) {
       this.isLoading = updatedState;
       return updatedState;
+    },
+  },
+  methods: {
+    updateSource(variable) {
+      this.selectedSource = variable;
     },
   },
 };
