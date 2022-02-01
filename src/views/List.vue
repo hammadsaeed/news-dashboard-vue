@@ -1,15 +1,15 @@
 <template>
-  <ListView />
+  <Dashboard />
 </template>
 
 <script>
-import ListView from '../components/Listview';
+import Dashboard from '../components/Dashboard';
 
 export default {
-  name: 'Home',
+  name: 'List',
 
   components: {
-    ListView,
+    Dashboard,
   },
 };
 </script>

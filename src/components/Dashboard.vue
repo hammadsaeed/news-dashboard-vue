@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <v-row class="text-center d-flex flex-column" >
+    <div v-if='this.loading'>
+      <Loading />
+    </div>
+    <v-row class="text-center d-flex flex-column" v-else>
       <v-col class="grid-column">
         <NewsTile
           v-for='article in articles' :key="article.publishedAt" :article='article' type='article'
@@ -12,11 +15,13 @@
 
 <script>
 import NewsTile from './NewsTile';
+import Loading from './Loading';
 
 export default {
-  name: 'Listview',
+  name: 'Dashboard',
   components: {
     NewsTile,
+    Loading,
   },
   data() {
     return {
@@ -26,6 +31,15 @@ export default {
   computed: {
     articles() {
       return this.$store.state.articles;
+    },
+    loading() {
+      return this.$store.getters.loading;
+    },
+  },
+  watch: {
+    loading(updatedState) {
+      this.isLoading = updatedState;
+      return updatedState;
     },
   },
 };

@@ -52,7 +52,6 @@
               ></v-progress-circular>
             </v-row>
           </template>
-          <!-- <v-card-title>{{article.title}}</v-card-title> -->
         </v-img>
 
         <v-card-text class="text--primary">
@@ -61,7 +60,7 @@
           >
             {{article.title.split('-').slice(0, -1).join("-")}}
           </p>
-          <div>{{article.title.split('-').pop()}}</div>
+           <p class='mb-1 text-wrap'>{{article.title.split('-').pop()}}</p >
         </v-card-text>
 
         <v-card-actions>
@@ -69,7 +68,7 @@
             color="orange"
             text
             :to="{
-              path: `${type}/${article.publishedAt}`,
+              path: `${type}/${JSON.stringify(`${article.author}-${article.publishedAt}`)}`,
               params: 'dsadasd'
             }"
           >
@@ -85,27 +84,17 @@
         </v-card-actions>
 
       </v-card>
-    <!-- <NewsPage v-show='toggle' /> -->
-  <!-- </v-hover> -->
   </v-lazy>
 </template>
 
 <script>
-// import NewsPage from './NewsPage.vue';
 
 export default {
   props: ['article', 'type'],
-  components: {
-    // NewsPage,
-  },
   methods: {
     gotoContact() {
-      const payload = this.article;
-      this.$store.dispatch('updateHistory', payload);
       window.open(this.article.url);
     },
-    // addToHistory() {
-    // },
   },
   data() {
     return {

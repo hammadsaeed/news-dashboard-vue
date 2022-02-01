@@ -8,7 +8,9 @@ export const getNewsFeed = ({ commit }) => {
     .then((response) => {
       if (response.status === 200 && response.data.articles) {
         commit('SET_LIVE_NEWS_FEED', response.data.articles);
-        console.log(response.data.articles);
+      }
+      if (response.data.status === 'ok') {
+        commit('UPDATE_LOADING');
       }
     });
 };
@@ -18,7 +20,6 @@ export const getSources = ({ commit }) => {
     .then((response) => {
       if (response.status === 200 && response.data.articles) {
         commit('SET_LIVE_NEWS_FEED', response.data.articles);
-        console.log(response.data.articles);
       }
     });
 };
