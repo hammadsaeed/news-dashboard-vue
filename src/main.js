@@ -14,6 +14,7 @@ new Vue({
   vuetify,
   async beforeCreate() {
     this.$store.dispatch('getNewsFeed');
+    this.$store.dispatch('getSources');
   },
   render: (h) => h(App),
 }).$mount('#app');

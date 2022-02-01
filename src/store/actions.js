@@ -16,10 +16,10 @@ export const getNewsFeed = ({ commit }) => {
 };
 
 export const getSources = ({ commit }) => {
-  axios.get(`${config.newsApiEndpoint}/top-headlines?country=${country}&apiKey=${config.newApiKey}`)
+  axios.get(`${config.newsApiEndpoint}/sources?apiKey=${config.newApiKey}`)
     .then((response) => {
-      if (response.status === 200 && response.data.articles) {
-        commit('SET_LIVE_NEWS_FEED', response.data.articles);
+      if (response.status === 200) {
+        commit('SET_SOURCES', response.data.sources);
       }
     });
 };

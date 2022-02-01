@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import state from './state';
-import { getNewsFeed } from './actions';
-import { SET_LIVE_NEWS_FEED, UPDATE_LOADING } from './mutations';
+import { getNewsFeed, getSources } from './actions';
+import { SET_LIVE_NEWS_FEED, UPDATE_LOADING, SET_SOURCES } from './mutations';
 
 Vue.use(Vuex);
 
@@ -11,9 +11,11 @@ export default new Vuex.Store({
   mutations: {
     SET_LIVE_NEWS_FEED,
     UPDATE_LOADING,
+    SET_SOURCES,
   },
   actions: {
     getNewsFeed,
+    getSources,
   },
   modules: {
   },
