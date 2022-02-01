@@ -68,7 +68,7 @@
             color="orange"
             text
             :to="{
-              path: `${type}/${article.publishedAt}`,
+              path: `${type}/${JSON.stringify(`${article.author}-${article.publishedAt}`)}`,
               params: 'dsadasd'
             }"
           >
@@ -84,19 +84,13 @@
         </v-card-actions>
 
       </v-card>
-    <!-- <NewsPage v-show='toggle' /> -->
-  <!-- </v-hover> -->
   </v-lazy>
 </template>
 
 <script>
-// import NewsPage from './NewsPage.vue';
 
 export default {
   props: ['article', 'type'],
-  components: {
-    // NewsPage,
-  },
   methods: {
     gotoContact() {
       window.open(this.article.url);

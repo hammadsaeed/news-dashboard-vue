@@ -39,12 +39,10 @@
               {{data.title.split('-').slice(0, -1).join("-")}}
             </div>
             <div   class="d-flex justify-space-between mb-5">
-
               <div class="text-Caption mb-1">{{data.source.name}}</div>
               <div class="text-Caption mb-1">
                 {{this.date(data.publishedAt)}}
               </div>
-
             </div>
           </div>
           <div class="headline mb-1">{{data.description}}</div>
@@ -114,7 +112,7 @@ export default {
             tempData = this.$store.state.articles;
         }
         tempData.forEach((article) => {
-          if (article.publishedAt === this.id) {
+          if (JSON.stringify(`${article.author}-${article.publishedAt}`) === this.id) {
             this.data = article;
           }
         });
