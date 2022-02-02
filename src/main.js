@@ -12,5 +12,10 @@ new Vue({
   router,
   store,
   vuetify,
+  async beforeCreate() {
+    this.$store.dispatch('getNewsFeed');
+    this.$store.dispatch('getSources');
+    this.$store.commit('INITIALISE');
+  },
   render: (h) => h(App),
 }).$mount('#app');
