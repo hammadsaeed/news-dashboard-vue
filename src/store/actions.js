@@ -23,3 +23,7 @@ export const getSources = ({ commit }) => {
       }
     });
 };
+
+export const updateHistory = ({ commit }, payload) => {
+  commit('SET_HISTORY', payload);
+};

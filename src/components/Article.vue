@@ -121,6 +121,8 @@ export default {
     },
     gotoContact() {
       if (this.data) {
+        const payload = this.data;
+        this.$store.dispatch('updateHistory', payload);
         window.open(this.data.url);
       }
     },
