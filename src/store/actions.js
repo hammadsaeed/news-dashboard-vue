@@ -27,3 +27,13 @@ export const getSources = ({ commit }) => {
 export const updateHistory = ({ commit }, payload) => {
   commit('SET_HISTORY', payload);
 };
+
+export const getResults = ({ commit }, payload) => {
+  commit('UPDATE_LOADING');
+  axios.get(`${config.newsApiEndpoint}/top-headlines?q=${payload}&apiKey=${config.newApiKey}`)
+    .then((response) => {
+      if (response.status === 200 && response.data.articles) {
+        commit('UPDATE_SEACH', response.data.articles);
+      }
+    });
+};
