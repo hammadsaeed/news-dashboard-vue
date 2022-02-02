@@ -12,7 +12,7 @@
 import NewsTile from './NewsTile';
 
 export default {
-  name: 'History',
+  name: 'HistoryDashboard',
   components: {
     NewsTile,
   },

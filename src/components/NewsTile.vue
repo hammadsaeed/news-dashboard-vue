@@ -13,7 +13,10 @@
         :elevation="hover ? 20 : 2"
         max-width="300"
         max-height="350"
+        min-width="300"
+        min-height="350"
         @mouseover="hover = true" @mouseleave="hover = false"
+        :color='this.$vuetify.theme.defaults.secondary'
       >
         <v-img
           class="align-end cursor: pointer"
@@ -54,35 +57,31 @@
           </template>
         </v-img>
 
-        <v-card-text class="text--primary">
+        <v-card-text class="text--primary pb-0" min-height="200px">
           <p
-            class='text-subtitle-2 mb-0 text-wrap'
+            class='text-subtitle-2 mb-1 text-wrap'
           >
             {{article.title.split('-').slice(0, -1).join("-")}}
           </p>
-           <p class='mb-1 text-wrap'>{{article.title.split('-').pop()}}</p >
+          <p class='text-subtitle-2 mb-1 text-wrap'>{{article.title.split('-').pop()}}</p >
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions class='justify-end'>
           <v-btn
-            color="orange"
+            :color='this.$vuetify.theme.defaults.accent'
             text
+            class='button'
             :to="{
-              path: `${type}/${JSON.stringify(`${article.author}-${article.publishedAt}`)}`,
-              params: 'dsadasd'
+              path:
+                `${ type !== 'search' ?
+                  `${type}/${JSON.stringify(`${article.author}-${article.publishedAt}`)}`
+                  : `${JSON.stringify(`${article.author}-${article.publishedAt}`)}`
+                }`,
             }"
           >
             Read More
           </v-btn>
-
-          <v-btn
-            color="orange"
-            text
-          >
-            Edit
-          </v-btn>
         </v-card-actions>
-
       </v-card>
   </v-lazy>
 </template>
@@ -118,5 +117,12 @@ export default {
             line-clamp: 2;
     -webkit-box-orient: vertical;
     text-align: start;
+  }
+  .button{
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    width: 50%;
+    background-color: #CCC5B9
   }
 </style>
