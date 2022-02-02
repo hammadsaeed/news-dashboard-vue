@@ -1,64 +1,115 @@
 <template>
   <v-container fill-height>
-    <v-row align="center" justify="center">
+    <v-row class='justify-end'>
       <v-col >
-        <div v-if='this.loading'>
-          <Loading />
-        </div>
-        <v-layout v-else class="d-flex flex-lg-row flex-sm-column flex-column"  >
-          <v-img
-            :aspect-ratio="16/9"
-            width="70%"
-            :src="data.urlToImage"
-            @click="gotoContact()"
-            class="img"
-            @mouseover="hover = true" @mouseleave="hover = false"
+      <div v-if='this.isLoading'>
+        <Loading />
+      </div>
+      <v-layout v-else class="d-flex flex-lg-row flex-sm-column flex-column"  >
+        <v-img
+          :aspect-ratio="16/9"
+          width="70%"
+          :src="data.urlToImage"
+          @click="gotoContact()"
+          class="img"
+          @mouseover="hover = true" @mouseleave="hover = false"
+        >
+          <v-expand-transition
+            :href="data.url"
           >
-            <v-expand-transition
-              :href="data.url"
-            >
-              <template>
-                <div
-                  class="align-icon"
-                  v-if="hover"
+            <template>
+              <div
+                class="align-icon"
+                v-if="hover"
+              >
+                <v-icon
+                  dark
+                  right
+                  @click="gotoContact()"
                 >
-                  <v-icon
-                    dark
-                    right
-                    @click="gotoContact()"
-                  >
-                    mdi-open-in-new
-                  </v-icon>
-                </div>
-              </template>
-            </v-expand-transition>
-          </v-img>
-          <v-flex class="pl-5 d-flex flex-column justify-space-around">
-            <div>
-              <div class="headline mb-1 pink--text">
-                {{data.title.split('-').slice(0, -1).join("-")}}
+                  mdi-open-in-new
+                </v-icon>
               </div>
-              <div   class="d-flex justify-space-between mb-5">
-                <div class="text-Caption mb-1">{{data.source.name}}</div>
-                <div class="text-Caption mb-1">
-                  {{this.date(data.publishedAt)}}
-                </div>
-              </div>
+            </template>
+          </v-expand-transition>
+        </v-img>
+        <v-flex class="pl-5 d-flex flex-column justify-space-around">
+          <div>
+            <p class="headline font-weight-bold mb-1 brown--text lighten-0" >
+              {{getTitle() }}
+            </p>
+            <div class="d-flex justify-space-between mb-5">
+
+              <p class="text-Caption mb-1 grey--text text--lighten-0">{{data.source.name}}</p>
+              <p class="text-Caption mb-1 grey--text text--lighten-0">
+                {{this.date(data.publishedAt)}}
+              </p>
+
             </div>
-            <div class="headline mb-1">{{data.description}}</div>
-          <v-card-actions  class="justify-end">
+          </div>
+          <div>
+            <div class="headline mb-1 brown--text lighten-1">{{data.description}}</div>
+            <p
+              class="text-Caption mb-1 grey--text text--lighten-0" v-if=data.author
+            >Writthen by : {{data.author}}</p>
+          </div>
+          <v-card-actions  class="justify-end" align="center">
+            <v-btn
+              :color='this.$vuetify.theme.defaults.accent'
+              text
+              class='button'
+              @click.stop="dialog = true"
+              v-if='isArticle()'
+            >
+              Edit
+            </v-btn>
             <v-btn
               :color='this.$vuetify.theme.defaults.accent'
               text
               class='button'
               @click="gotoContact()"
             >
-              Read More
+              Source
             </v-btn>
           </v-card-actions>
-
-          </v-flex>
-        </v-layout>
+          <v-dialog
+            v-model="dialog"
+            max-width="750"
+          >
+            <v-card>
+              <v-card-title class="text-h5">
+                {{getTitle()}}
+              </v-card-title>
+              <v-form
+                ref="form"
+                v-model="valid"
+                lazy-validation
+              >
+                <v-text-field
+                  placeholder="New Title"
+                  class='mx-6 mt-2 justify-center'
+                  dense
+                  :rules='validationRules'
+                  solo
+                  v-model='title'
+                  @keydown.enter="validate($event)"
+                ></v-text-field>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    :color='this.$vuetify.theme.defaults.accent'
+                    text
+                    class='button'
+                    @click="validate"
+                  >
+                    Update
+                  </v-btn>
+                </v-card-actions>
+              </v-form>
+            </v-card>
+          </v-dialog>
+        </v-flex>
+      </v-layout>
       </v-col>
     </v-row>
   </v-container>
@@ -75,18 +126,26 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
       data: {},
       hover: false,
+      dialog: false,
       date(d) {
         const date = new Date(d.substring(0, d.length - 1));
         return date.toString().slice(0, 24);
       },
+      validationRules: [
+        (v) => !!v || 'Title is required',
+        (v) => (v && v.length <= 90) || 'Title must be less than 90 characters',
+      ],
+      title: null,
     };
   },
   computed: {
     loading() {
       return this.$store.getters.loading;
+    },
+    news() {
+      return this.$store.getters.news;
     },
   },
   mounted() {
@@ -94,7 +153,6 @@ export default {
   },
   watch: {
     loading(updatedState) {
-      this.isLoading = updatedState;
       if (!updatedState) {
         this.requestData();
       }
@@ -123,8 +181,15 @@ export default {
             this.data = article;
           }
         });
-        this.isLoading = false;
       }
+    },
+    getTitle() {
+      if (this.data.title) return this.data.title;
+      return null;
+    },
+    getAuthor() {
+      if (this.data.title) return this.data.title;
+      return null;
     },
     gotoContact() {
       if (this.data) {
@@ -132,6 +197,20 @@ export default {
         this.$store.dispatch('updateHistory', payload);
         window.open(this.data.url);
       }
+    },
+    isArticle() {
+      if (this.type === 'article') return true;
+      return false;
+    },
+    validate(event) {
+      if (this.$refs.form.validate()) {
+        this.$store.dispatch('updateTitle', { id: JSON.stringify(`${this.data.author}-${this.data.publishedAt}`), title: this.title });
+        this.dialog = false;
+      }
+      if (event) {
+        event.preventDefault();
+      }
+      return this.$refs.form.validate();
     },
   },
 };

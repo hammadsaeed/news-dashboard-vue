@@ -18,8 +18,7 @@ export default {
   },
   computed: {
     history() {
-      const hist = this.$store.state.history;
-      return hist.reverse();
+      return this.$store.state.history;
     },
   },
 };

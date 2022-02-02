@@ -37,3 +37,7 @@ export const getResults = ({ commit }, payload) => {
       }
     });
 };
+
+export const updateTitle = ({ commit }, payload) => {
+  commit('UPDATE_TITLE', payload);
+};
