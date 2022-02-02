@@ -1,6 +1,6 @@
 export const config = {
   newsApiEndpoint: process.env.VUE_APP_API_ENDPOINT || 'https://newsapi.org/v2',
-  newApiKey: process.env.VUE_APP_API_KEY,
+  newApiKey: '09965fa5be6b481fad59243275d0720a',
 };
 
 export default config;
