@@ -93,6 +93,8 @@ export default {
   props: ['article', 'type'],
   methods: {
     gotoContact() {
+      const payload = this.article;
+      this.$store.dispatch('updateHistory', payload);
       window.open(this.article.url);
     },
   },
