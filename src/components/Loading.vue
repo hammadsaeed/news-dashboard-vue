@@ -2,7 +2,7 @@
   <v-container>
     <v-progress-circular
       :size="50"
-      color="primary"
+      color="black lighten-1"
       indeterminate
       class = 'loading'
     ></v-progress-circular>
