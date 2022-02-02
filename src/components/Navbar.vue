@@ -29,6 +29,7 @@
       <v-tabs align-with-title color='secondary'>
         <v-tab to='/'>List View</v-tab>
         <v-tab to='/history'>History</v-tab>
+        <v-tab to='/fail-request'>ErrorPage</v-tab>
       </v-tabs>
     </template>
   </v-app-bar>

@@ -2,10 +2,10 @@
   <v-container fill-height>
     <v-row class='justify-end'>
       <v-col >
-      <div v-if='this.isLoading'>
+      <div v-if='loading'>
         <Loading />
       </div>
-      <v-layout v-else class="d-flex flex-lg-row flex-sm-column flex-column"  >
+      <v-layout v-else-if='data.url' class="d-flex flex-lg-row flex-sm-column flex-column"  >
         <v-img
           :aspect-ratio="16/9"
           width="70%"
@@ -39,12 +39,10 @@
               {{getTitle() }}
             </p>
             <div class="d-flex justify-space-between mb-5">
-
-              <p class="text-Caption mb-1 grey--text text--lighten-0">{{data.source.name}}</p>
+               <p class="text-Caption mb-1 grey--text text--lighten-0">{{data.source.name}}</p>
               <p class="text-Caption mb-1 grey--text text--lighten-0">
                 {{this.date(data.publishedAt)}}
               </p>
-
             </div>
           </div>
           <div>
@@ -82,7 +80,6 @@
               </v-card-title>
               <v-form
                 ref="form"
-                v-model="valid"
                 lazy-validation
               >
                 <v-text-field
@@ -184,11 +181,9 @@ export default {
       }
     },
     getTitle() {
-      if (this.data.title) return this.data.title;
-      return null;
-    },
-    getAuthor() {
-      if (this.data.title) return this.data.title;
+      if (this.data.title) {
+        return this.data.title;
+      }
       return null;
     },
     gotoContact() {
