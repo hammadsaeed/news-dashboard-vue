@@ -41,12 +41,18 @@ export default {
       return this.$store.state.articles;
     },
     loading() {
+      if (!this.$store.state.articles.length) {
+        this.$store.commit('UPDATE_LOADING');
+        this.$store.dispatch('getNewsFeed');
+        this.$store.dispatch('getSources');
+        this.$store.commit('INITIALISE');
+        return null;
+      }
       return this.$store.getters.loading;
     },
   },
   watch: {
     loading(updatedState) {
-      this.isLoading = updatedState;
       return updatedState;
     },
   },

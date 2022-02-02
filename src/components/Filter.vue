@@ -38,7 +38,6 @@ export default {
   data() {
     return {
       data: {},
-      // select: { name: 'all', country: 'en' },
     };
   },
   computed: {
