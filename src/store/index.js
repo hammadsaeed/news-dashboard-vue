@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import state from './state';
 import {
-  getNewsFeed, getSources, updateHistory, getResults, updateTitle,
+  getNewsFeed, getSources, updateHistory, getResults, updateTitle, fakeUrl,
 } from './actions';
 import {
   SET_LIVE_NEWS_FEED,
@@ -12,6 +12,7 @@ import {
   SET_HISTORY,
   UPDATE_SEACH,
   UPDATE_TITLE,
+  HANDLE_ERROR,
 } from './mutations';
 
 Vue.use(Vuex);
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     SET_HISTORY,
     UPDATE_SEACH,
     UPDATE_TITLE,
+    HANDLE_ERROR,
   },
   actions: {
     getNewsFeed,
@@ -33,6 +35,7 @@ export default new Vuex.Store({
     updateHistory,
     getResults,
     updateTitle,
+    fakeUrl,
   },
   modules: {
   },

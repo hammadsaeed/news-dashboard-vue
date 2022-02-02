@@ -4,6 +4,8 @@ import List from '../views/List';
 import Detail from '../views/Detail';
 import History from '../views/History';
 import Search from '../views/Search';
+import Err from '../views/Error';
+import BadRequest from '../views/BadRequest';
 
 Vue.use(VueRouter);
 
@@ -19,9 +21,20 @@ const routes = [
     component: History,
   },
   {
+    path: '/fail-request',
+    name: 'BadRequest',
+    component: BadRequest,
+  },
+  {
     path: '/search/query=:text',
     name: 'Search',
     component: Search,
+    props: true,
+  },
+  {
+    path: '/error/:type/:message',
+    name: 'Error',
+    component: Err,
     props: true,
   },
   {

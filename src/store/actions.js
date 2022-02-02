@@ -12,6 +12,8 @@ export const getNewsFeed = ({ commit }) => {
       if (response.data.status === 'ok') {
         commit('UPDATE_LOADING');
       }
+    }).catch((error) => {
+      commit('HANDLE_ERROR', error);
     });
 };
 
@@ -21,6 +23,8 @@ export const getSources = ({ commit }) => {
       if (response.status === 200) {
         commit('SET_SOURCES', response.data.sources);
       }
+    }).catch((error) => {
+      commit('HANDLE_ERROR', error);
     });
 };
 
@@ -35,9 +39,23 @@ export const getResults = ({ commit }, payload) => {
       if (response.status === 200 && response.data.articles) {
         commit('UPDATE_SEACH', response.data.articles);
       }
+    }).catch((error) => {
+      commit('HANDLE_ERROR', error);
     });
 };
 
 export const updateTitle = ({ commit }, payload) => {
   commit('UPDATE_TITLE', payload);
+};
+
+export const fakeUrl = ({ commit }) => {
+  commit('UPDATE_LOADING');
+  axios.get(`${config.newsApiEndpoint}/sources?apiKey${config.newApiKey}`)
+    .then((response) => {
+      if (response.status === 200) {
+        commit('UPDATE_LOADING');
+      }
+    }).catch((error) => {
+      commit('HANDLE_ERROR', error);
+    });
 };
